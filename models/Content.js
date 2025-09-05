@@ -8,7 +8,7 @@ const contentSchema = new mongoose.Schema({
     unique: true,
     enum: [
       'hero', 'about', 'services', 'projects', 'contact', 'footer',
-      'seo', 'statistics', 'testimonials', 'process'
+      'seo', 'statistics', 'testimonials', 'process', 'social'
     ]
   },
   
@@ -183,6 +183,64 @@ const contentSchema = new mongoose.Schema({
       default: 'Mon-Sat: 9:00 AM - 6:00 PM'
     },
     serviceAreas: [String]
+  },
+  
+  // Social Media Links
+  social: {
+    facebookUrl: {
+      type: String,
+      validate: {
+        validator: function(v) {
+          return !v || /^https?:\/\/.+/.test(v);
+        },
+        message: 'Please enter a valid URL'
+      }
+    },
+    instagramUrl: {
+      type: String,
+      validate: {
+        validator: function(v) {
+          return !v || /^https?:\/\/.+/.test(v);
+        },
+        message: 'Please enter a valid URL'
+      }
+    },
+    twitterUrl: {
+      type: String,
+      validate: {
+        validator: function(v) {
+          return !v || /^https?:\/\/.+/.test(v);
+        },
+        message: 'Please enter a valid URL'
+      }
+    },
+    linkedinUrl: {
+      type: String,
+      validate: {
+        validator: function(v) {
+          return !v || /^https?:\/\/.+/.test(v);
+        },
+        message: 'Please enter a valid URL'
+      }
+    },
+    youtubeUrl: {
+      type: String,
+      validate: {
+        validator: function(v) {
+          return !v || /^https?:\/\/.+/.test(v);
+        },
+        message: 'Please enter a valid URL'
+      }
+    },
+    whatsappBusinessUrl: {
+      type: String,
+      validate: {
+        validator: function(v) {
+          return !v || /^https?:\/\/.+/.test(v);
+        },
+        message: 'Please enter a valid URL'
+      }
+    }
   },
   
   // Footer Content

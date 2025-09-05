@@ -691,6 +691,53 @@ class AdminPanel {
         }
     }
 
+    async deleteService(serviceId) {
+        if (!confirm('Are you sure you want to delete this service?')) {
+            return;
+        }
+
+        try {
+            this.showLoading();
+            const response = await this.apiCall(`/content/services/services/${serviceId}`, 'DELETE');
+            
+            if (response.success) {
+                this.showNotification('Service deleted successfully', 'success');
+                this.loadServices();
+            }
+            this.hideLoading();
+        } catch (error) {
+            console.error('Delete service error:', error);
+            this.hideLoading();
+            this.showNotification('Failed to delete service', 'error');
+        }
+    }
+
+    async editService(serviceId) {
+        try {
+            this.showLoading();
+            // Load service data for editing
+            const response = await this.apiCall('/content/services', 'GET');
+            
+            if (response.success && response.data.services && response.data.services.items) {
+                const service = response.data.services.items.find(s => s._id === serviceId);
+                if (service) {
+                    this.showServiceModal(serviceId);
+                    // Populate form with service data
+                    document.getElementById('serviceTitle').value = service.title || '';
+                    document.getElementById('serviceDescription').value = service.description || '';
+                    document.getElementById('serviceIcon').value = service.icon || '';
+                    document.getElementById('serviceFeatures').value = service.features ? service.features.join('\n') : '';
+                    document.getElementById('servicePrice').value = service.price || '';
+                }
+            }
+            this.hideLoading();
+        } catch (error) {
+            console.error('Edit service error:', error);
+            this.hideLoading();
+            this.showNotification('Failed to load service data', 'error');
+        }
+    }
+
     async loadProjects() {
         try {
             const response = await this.apiCall('/content/projects', 'GET');
@@ -785,6 +832,57 @@ class AdminPanel {
             console.error('Project submit error:', error);
             this.hideLoading();
             this.showNotification('Failed to add project', 'error');
+        }
+    }
+
+    async deleteProject(projectId) {
+        if (!confirm('Are you sure you want to delete this project?')) {
+            return;
+        }
+
+        try {
+            this.showLoading();
+            const response = await this.apiCall(`/content/projects/projects/${projectId}`, 'DELETE');
+            
+            if (response.success) {
+                this.showNotification('Project deleted successfully', 'success');
+                this.loadProjects();
+            }
+            this.hideLoading();
+        } catch (error) {
+            console.error('Delete project error:', error);
+            this.hideLoading();
+            this.showNotification('Failed to delete project', 'error');
+        }
+    }
+
+    async editProject(projectId) {
+        try {
+            this.showLoading();
+            // Load project data for editing
+            const response = await this.apiCall('/content/projects', 'GET');
+            
+            if (response.success && response.data.projects && response.data.projects.items) {
+                const project = response.data.projects.items.find(p => p._id === projectId);
+                if (project) {
+                    this.showProjectModal(projectId);
+                    // Populate form with project data
+                    document.getElementById('projectTitle').value = project.title || '';
+                    document.getElementById('projectDescription').value = project.description || '';
+                    document.getElementById('projectLocation').value = project.location || '';
+                    document.getElementById('projectType').value = project.type || '';
+                    document.getElementById('projectSize').value = project.size || '';
+                    document.getElementById('projectImageUrl').value = project.imageUrl || '';
+                    if (project.completedDate) {
+                        document.getElementById('projectCompletedDate').value = new Date(project.completedDate).toISOString().split('T')[0];
+                    }
+                }
+            }
+            this.hideLoading();
+        } catch (error) {
+            console.error('Edit project error:', error);
+            this.hideLoading();
+            this.showNotification('Failed to load project data', 'error');
         }
     }
 
