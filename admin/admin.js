@@ -90,6 +90,11 @@ class AdminPanel {
             this.handleContentSubmit('contact');
         });
 
+        document.getElementById('socialContentForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.handleContentSubmit('social');
+        });
+
         document.getElementById('seoContentForm').addEventListener('submit', (e) => {
             e.preventDefault();
             this.handleContentSubmit('seo');
@@ -569,6 +574,16 @@ class AdminPanel {
             document.getElementById('workingHours').value = content.contact.contact?.workingHours || 'Mon-Sat: 9:00 AM - 6:00 PM';
         }
 
+        // Social media section
+        if (content.social) {
+            document.getElementById('facebookUrl').value = content.social.social?.facebookUrl || '';
+            document.getElementById('instagramUrl').value = content.social.social?.instagramUrl || '';
+            document.getElementById('twitterUrl').value = content.social.social?.twitterUrl || '';
+            document.getElementById('linkedinUrl').value = content.social.social?.linkedinUrl || '';
+            document.getElementById('youtubeUrl').value = content.social.social?.youtubeUrl || '';
+            document.getElementById('whatsappBusinessUrl').value = content.social.social?.whatsappBusinessUrl || '';
+        }
+
         // SEO section
         if (content.seo) {
             document.getElementById('seoTitle').value = content.seo.seo?.title || '';
@@ -734,9 +749,31 @@ class AdminPanel {
     async handleProjectSubmit() {
         try {
             this.showLoading();
-            const formData = this.getFormData('projectForm');
+            const formData = new FormData(document.getElementById('projectForm'));
             
-            const response = await this.apiCall('/content/projects/projects', 'POST', formData);
+            // Handle image upload
+            const imageFile = document.getElementById('projectImageFile').files[0];
+            const imageUrl = document.getElementById('projectImageUrl').value;
+            
+            if (imageFile) {
+                // Upload file first
+                const uploadResponse = await this.uploadImage(imageFile);
+                if (uploadResponse.success) {
+                    formData.set('imageUrl', uploadResponse.data.url);
+                }
+            } else if (imageUrl) {
+                formData.set('imageUrl', imageUrl);
+            }
+            
+            // Convert FormData to regular object for API
+            const projectData = {};
+            for (let [key, value] of formData.entries()) {
+                if (key !== 'imageFile') {
+                    projectData[key] = value;
+                }
+            }
+            
+            const response = await this.apiCall('/content/projects/projects', 'POST', projectData);
             
             if (response.success) {
                 this.showNotification('Project added successfully', 'success');
@@ -748,6 +785,26 @@ class AdminPanel {
             console.error('Project submit error:', error);
             this.hideLoading();
             this.showNotification('Failed to add project', 'error');
+        }
+    }
+
+    async uploadImage(file) {
+        try {
+            const formData = new FormData();
+            formData.append('image', file);
+            
+            const response = await fetch('/api/upload/image', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                },
+                body: formData
+            });
+            
+            return await response.json();
+        } catch (error) {
+            console.error('Image upload error:', error);
+            return { success: false, message: 'Failed to upload image' };
         }
     }
 

@@ -69,7 +69,259 @@ document.addEventListener('DOMContentLoaded', () => {
         el.classList.add('fade-in');
         observer.observe(el);
     });
+    
+    // Load dynamic content from API
+    loadDynamicContent();
 });
+
+// Load dynamic content from API
+async function loadDynamicContent() {
+    try {
+        const response = await fetch('/api/content');
+        const result = await response.json();
+        
+        if (result.success) {
+            const content = result.data;
+            
+            // Update contact information
+            if (content.contact && content.contact.contact) {
+                updateContactInfo(content.contact.contact);
+            }
+            
+            // Update hero section
+            if (content.hero && content.hero.hero) {
+                updateHeroSection(content.hero.hero);
+            }
+            
+            // Update about section
+            if (content.about && content.about.about) {
+                updateAboutSection(content.about.about);
+            }
+            
+            // Update services
+            if (content.services && content.services.services) {
+                updateServices(content.services.services);
+            }
+            
+            // Update projects
+            if (content.projects && content.projects.projects) {
+                updateProjects(content.projects.projects);
+            }
+            
+            // Update social media
+            if (content.social && content.social.social) {
+                updateSocialMedia(content.social.social);
+            }
+        }
+    } catch (error) {
+        console.error('Failed to load dynamic content:', error);
+    }
+}
+
+// Update contact information on the page
+function updateContactInfo(contactData) {
+    // Update phone number
+    const phoneElements = document.querySelectorAll('.contact-phone, .phone-number');
+    phoneElements.forEach(el => {
+        if (contactData.phone) {
+            el.textContent = contactData.phone;
+            el.href = `tel:${contactData.phone}`;
+        }
+    });
+    
+    // Update email
+    const emailElements = document.querySelectorAll('.contact-email, .email-address');
+    emailElements.forEach(el => {
+        if (contactData.email) {
+            el.textContent = contactData.email;
+            el.href = `mailto:${contactData.email}`;
+        }
+    });
+    
+    // Update address
+    const addressElements = document.querySelectorAll('.contact-address, .business-address');
+    addressElements.forEach(el => {
+        if (contactData.address) {
+            el.textContent = contactData.address;
+        }
+    });
+    
+    // Update WhatsApp number
+    const whatsappElements = document.querySelectorAll('.whatsapp-number');
+    whatsappElements.forEach(el => {
+        if (contactData.whatsappNumber) {
+            el.textContent = contactData.whatsappNumber;
+        }
+    });
+    
+    // Update working hours
+    const hoursElements = document.querySelectorAll('.working-hours, .business-hours');
+    hoursElements.forEach(el => {
+        if (contactData.workingHours) {
+            el.textContent = contactData.workingHours;
+        }
+    });
+}
+
+// Update hero section
+function updateHeroSection(heroData) {
+    if (heroData.title) {
+        const titleElement = document.querySelector('.hero-title, .main-title');
+        if (titleElement) titleElement.textContent = heroData.title;
+    }
+    
+    if (heroData.subtitle) {
+        const subtitleElement = document.querySelector('.hero-subtitle, .main-subtitle');
+        if (subtitleElement) subtitleElement.textContent = heroData.subtitle;
+    }
+    
+    if (heroData.description) {
+        const descElement = document.querySelector('.hero-description, .main-description');
+        if (descElement) descElement.textContent = heroData.description;
+    }
+    
+    if (heroData.ctaText) {
+        const ctaElements = document.querySelectorAll('.cta-button, .quote-btn');
+        ctaElements.forEach(el => {
+            el.textContent = heroData.ctaText;
+        });
+    }
+}
+
+// Update about section
+function updateAboutSection(aboutData) {
+    if (aboutData.title) {
+        const titleElement = document.querySelector('.about-title');
+        if (titleElement) titleElement.textContent = aboutData.title;
+    }
+    
+    if (aboutData.subtitle) {
+        const subtitleElement = document.querySelector('.about-subtitle');
+        if (subtitleElement) subtitleElement.textContent = aboutData.subtitle;
+    }
+    
+    if (aboutData.description) {
+        const descElement = document.querySelector('.about-description');
+        if (descElement) descElement.textContent = aboutData.description;
+    }
+    
+    if (aboutData.mission) {
+        const missionElement = document.querySelector('.about-mission');
+        if (missionElement) missionElement.textContent = aboutData.mission;
+    }
+}
+
+// Update services section
+function updateServices(servicesData) {
+    if (servicesData.items && servicesData.items.length > 0) {
+        const servicesContainer = document.querySelector('.services-grid, .services-list');
+        if (servicesContainer) {
+            servicesContainer.innerHTML = '';
+            
+            servicesData.items.forEach(service => {
+                const serviceCard = document.createElement('div');
+                serviceCard.className = 'service-card';
+                serviceCard.innerHTML = `
+                    <div class="service-icon">
+                        <i class="${service.icon || 'fas fa-solar-panel'}"></i>
+                    </div>
+                    <h3>${service.title}</h3>
+                    <p>${service.description}</p>
+                    <button class="whatsapp-btn" onclick="openWhatsAppQuick('${service.title}')">
+                        <i class="fab fa-whatsapp"></i> WhatsApp Quote
+                    </button>
+                `;
+                servicesContainer.appendChild(serviceCard);
+            });
+        }
+    }
+}
+
+// Update projects section
+function updateProjects(projectsData) {
+    if (projectsData.items && projectsData.items.length > 0) {
+        const projectsContainer = document.querySelector('.projects-grid, .projects-list');
+        if (projectsContainer) {
+            projectsContainer.innerHTML = '';
+            
+            projectsData.items.forEach(project => {
+                const projectCard = document.createElement('div');
+                projectCard.className = 'project-card';
+                projectCard.innerHTML = `
+                    <div class="project-image">
+                        <img src="${project.imageUrl || '/images/default-project.jpg'}" alt="${project.title}" onerror="this.src='/images/default-project.jpg'">
+                    </div>
+                    <div class="project-info">
+                        <h3>${project.title}</h3>
+                        <p>${project.description}</p>
+                        <div class="project-details">
+                            <span class="location"><i class="fas fa-map-marker-alt"></i> ${project.location}</span>
+                            <span class="type"><i class="fas fa-tag"></i> ${project.type}</span>
+                        </div>
+                    </div>
+                `;
+                projectsContainer.appendChild(projectCard);
+            });
+        }
+    }
+}
+
+// Update social media links
+function updateSocialMedia(socialData) {
+    // Update Facebook link
+    if (socialData.facebookUrl) {
+        const facebookLinks = document.querySelectorAll('.social-facebook, .facebook-link');
+        facebookLinks.forEach(link => {
+            link.href = socialData.facebookUrl;
+            link.style.display = 'inline-block';
+        });
+    }
+    
+    // Update Instagram link
+    if (socialData.instagramUrl) {
+        const instagramLinks = document.querySelectorAll('.social-instagram, .instagram-link');
+        instagramLinks.forEach(link => {
+            link.href = socialData.instagramUrl;
+            link.style.display = 'inline-block';
+        });
+    }
+    
+    // Update Twitter link
+    if (socialData.twitterUrl) {
+        const twitterLinks = document.querySelectorAll('.social-twitter, .twitter-link');
+        twitterLinks.forEach(link => {
+            link.href = socialData.twitterUrl;
+            link.style.display = 'inline-block';
+        });
+    }
+    
+    // Update LinkedIn link
+    if (socialData.linkedinUrl) {
+        const linkedinLinks = document.querySelectorAll('.social-linkedin, .linkedin-link');
+        linkedinLinks.forEach(link => {
+            link.href = socialData.linkedinUrl;
+            link.style.display = 'inline-block';
+        });
+    }
+    
+    // Update YouTube link
+    if (socialData.youtubeUrl) {
+        const youtubeLinks = document.querySelectorAll('.social-youtube, .youtube-link');
+        youtubeLinks.forEach(link => {
+            link.href = socialData.youtubeUrl;
+            link.style.display = 'inline-block';
+        });
+    }
+    
+    // Update WhatsApp Business link
+    if (socialData.whatsappBusinessUrl) {
+        const whatsappLinks = document.querySelectorAll('.social-whatsapp, .whatsapp-link');
+        whatsappLinks.forEach(link => {
+            link.href = socialData.whatsappBusinessUrl;
+            link.style.display = 'inline-block';
+        });
+    }
+}
 
 // Form handling
 const quoteForm = document.getElementById('quoteForm');

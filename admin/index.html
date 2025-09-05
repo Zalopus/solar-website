@@ -220,6 +220,7 @@
                     <button class="tab-btn active" data-tab="hero">Hero Section</button>
                     <button class="tab-btn" data-tab="about">About Us</button>
                     <button class="tab-btn" data-tab="contact">Contact Info</button>
+                    <button class="tab-btn" data-tab="social">Social Media</button>
                     <button class="tab-btn" data-tab="seo">SEO Settings</button>
                 </div>
                 <div class="content-forms">
@@ -296,6 +297,38 @@
                                 <input type="text" id="workingHours" name="workingHours" value="Mon-Sat: 9:00 AM - 6:00 PM">
                             </div>
                             <button type="submit" class="btn btn-primary">Save Contact Info</button>
+                        </form>
+                    </div>
+
+                    <!-- Social Media Form -->
+                    <div id="socialForm" class="content-form">
+                        <h3>Social Media Links</h3>
+                        <form id="socialContentForm">
+                            <div class="form-group">
+                                <label for="facebookUrl">Facebook URL</label>
+                                <input type="url" id="facebookUrl" name="facebookUrl" placeholder="https://facebook.com/yourpage">
+                            </div>
+                            <div class="form-group">
+                                <label for="instagramUrl">Instagram URL</label>
+                                <input type="url" id="instagramUrl" name="instagramUrl" placeholder="https://instagram.com/yourpage">
+                            </div>
+                            <div class="form-group">
+                                <label for="twitterUrl">Twitter URL</label>
+                                <input type="url" id="twitterUrl" name="twitterUrl" placeholder="https://twitter.com/yourpage">
+                            </div>
+                            <div class="form-group">
+                                <label for="linkedinUrl">LinkedIn URL</label>
+                                <input type="url" id="linkedinUrl" name="linkedinUrl" placeholder="https://linkedin.com/company/yourcompany">
+                            </div>
+                            <div class="form-group">
+                                <label for="youtubeUrl">YouTube URL</label>
+                                <input type="url" id="youtubeUrl" name="youtubeUrl" placeholder="https://youtube.com/channel/yourchannel">
+                            </div>
+                            <div class="form-group">
+                                <label for="whatsappBusinessUrl">WhatsApp Business URL</label>
+                                <input type="url" id="whatsappBusinessUrl" name="whatsappBusinessUrl" placeholder="https://wa.me/919876543210">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Social Media Links</button>
                         </form>
                     </div>
 
@@ -519,8 +552,13 @@
                         <input type="text" id="projectSize" name="size" placeholder="5kW">
                     </div>
                     <div class="form-group">
-                        <label for="projectImage">Image URL (optional)</label>
-                        <input type="url" id="projectImage" name="image" placeholder="https://example.com/image.jpg">
+                        <label for="projectImage">Project Image</label>
+                        <input type="file" id="projectImageFile" name="imageFile" accept="image/*" onchange="previewImage(this)">
+                        <div id="imagePreview" class="image-preview" style="display: none;">
+                            <img id="previewImg" src="" alt="Preview" style="max-width: 200px; max-height: 150px; margin-top: 10px;">
+                        </div>
+                        <small class="form-text">Or enter image URL:</small>
+                        <input type="url" id="projectImageUrl" name="imageUrl" placeholder="https://example.com/image.jpg" style="margin-top: 5px;">
                     </div>
                     <div class="form-group">
                         <label for="projectCompletedDate">Completion Date</label>
@@ -552,5 +590,25 @@
     </div>
 
     <script src="admin.js"></script>
+    <script>
+        // Image preview function
+        function previewImage(input) {
+            const preview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>

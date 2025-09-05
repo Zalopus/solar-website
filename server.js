@@ -11,6 +11,7 @@ const quoteRoutes = require('./routes/quotes');
 const contentRoutes = require('./routes/content');
 const adminRoutes = require('./routes/admin');
 const whatsappRoutes = require('./routes/whatsapp');
+const uploadRoutes = require('./routes/upload');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -70,6 +71,7 @@ app.use('/api/quotes', quoteRoutes);
 app.use('/api/content', contentRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/whatsapp', whatsappRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Serve admin panel
 app.get('/admin', (req, res) => {
