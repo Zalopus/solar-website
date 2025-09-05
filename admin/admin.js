@@ -551,46 +551,46 @@ class AdminPanel {
     populateContentForms(content) {
         // Hero section
         if (content.hero) {
-            document.getElementById('heroTitle').value = content.hero.hero?.title || '';
-            document.getElementById('heroSubtitle').value = content.hero.hero?.subtitle || '';
-            document.getElementById('heroDescription').value = content.hero.hero?.description || '';
-            document.getElementById('heroCtaText').value = content.hero.hero?.ctaText || 'Get Free Quote';
+            document.getElementById('heroTitle').value = content.hero.title || '';
+            document.getElementById('heroSubtitle').value = content.hero.subtitle || '';
+            document.getElementById('heroDescription').value = content.hero.description || '';
+            document.getElementById('heroCtaText').value = content.hero.ctaText || 'Get Free Quote';
         }
 
         // About section
         if (content.about) {
-            document.getElementById('aboutTitle').value = content.about.about?.title || '';
-            document.getElementById('aboutSubtitle').value = content.about.about?.subtitle || '';
-            document.getElementById('aboutDescription').value = content.about.about?.description || '';
-            document.getElementById('aboutMission').value = content.about.about?.mission || '';
+            document.getElementById('aboutTitle').value = content.about.title || '';
+            document.getElementById('aboutSubtitle').value = content.about.subtitle || '';
+            document.getElementById('aboutDescription').value = content.about.description || '';
+            document.getElementById('aboutMission').value = content.about.mission || '';
         }
 
         // Contact section
         if (content.contact) {
-            document.getElementById('contactPhone').value = content.contact.contact?.phone || '';
-            document.getElementById('contactEmail').value = content.contact.contact?.email || '';
-            document.getElementById('contactAddress').value = content.contact.contact?.address || '';
-            document.getElementById('whatsappNumber').value = content.contact.contact?.whatsappNumber || '';
-            document.getElementById('workingHours').value = content.contact.contact?.workingHours || 'Mon-Sat: 9:00 AM - 6:00 PM';
+            document.getElementById('contactPhone').value = content.contact.phone || '';
+            document.getElementById('contactEmail').value = content.contact.email || '';
+            document.getElementById('contactAddress').value = content.contact.address || '';
+            document.getElementById('whatsappNumber').value = content.contact.whatsappNumber || '';
+            document.getElementById('workingHours').value = content.contact.workingHours || 'Mon-Sat: 9:00 AM - 6:00 PM';
         }
 
         // Social media section
         if (content.social) {
-            document.getElementById('facebookUrl').value = content.social.social?.facebookUrl || '';
-            document.getElementById('instagramUrl').value = content.social.social?.instagramUrl || '';
-            document.getElementById('twitterUrl').value = content.social.social?.twitterUrl || '';
-            document.getElementById('linkedinUrl').value = content.social.social?.linkedinUrl || '';
-            document.getElementById('youtubeUrl').value = content.social.social?.youtubeUrl || '';
-            document.getElementById('whatsappBusinessUrl').value = content.social.social?.whatsappBusinessUrl || '';
+            document.getElementById('facebookUrl').value = content.social.facebookUrl || '';
+            document.getElementById('instagramUrl').value = content.social.instagramUrl || '';
+            document.getElementById('twitterUrl').value = content.social.twitterUrl || '';
+            document.getElementById('linkedinUrl').value = content.social.linkedinUrl || '';
+            document.getElementById('youtubeUrl').value = content.social.youtubeUrl || '';
+            document.getElementById('whatsappBusinessUrl').value = content.social.whatsappBusinessUrl || '';
         }
 
         // SEO section
         if (content.seo) {
-            document.getElementById('seoTitle').value = content.seo.seo?.title || '';
-            document.getElementById('seoDescription').value = content.seo.seo?.description || '';
-            document.getElementById('seoKeywords').value = content.seo.seo?.keywords?.join(', ') || '';
-            document.getElementById('ogTitle').value = content.seo.seo?.ogTitle || '';
-            document.getElementById('ogDescription').value = content.seo.seo?.ogDescription || '';
+            document.getElementById('seoTitle').value = content.seo.title || '';
+            document.getElementById('seoDescription').value = content.seo.description || '';
+            document.getElementById('seoKeywords').value = content.seo.keywords?.join(', ') || '';
+            document.getElementById('ogTitle').value = content.seo.ogTitle || '';
+            document.getElementById('ogDescription').value = content.seo.ogDescription || '';
         }
     }
 
