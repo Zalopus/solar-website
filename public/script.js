@@ -120,26 +120,35 @@ async function loadDynamicContent() {
 
 // Update contact information on the page
 function updateContactInfo(contactData) {
+    console.log('Updating contact info with:', contactData);
+    
     // Update phone number
     const phoneElements = document.querySelectorAll('.contact-phone, .phone-number');
+    console.log('Found phone elements:', phoneElements.length);
     phoneElements.forEach(el => {
         if (contactData.phone) {
             el.textContent = contactData.phone;
-            el.href = `tel:${contactData.phone}`;
+            if (el.tagName === 'A') {
+                el.href = `tel:${contactData.phone}`;
+            }
         }
     });
     
     // Update email
     const emailElements = document.querySelectorAll('.contact-email, .email-address');
+    console.log('Found email elements:', emailElements.length);
     emailElements.forEach(el => {
         if (contactData.email) {
             el.textContent = contactData.email;
-            el.href = `mailto:${contactData.email}`;
+            if (el.tagName === 'A') {
+                el.href = `mailto:${contactData.email}`;
+            }
         }
     });
     
     // Update address
     const addressElements = document.querySelectorAll('.contact-address, .business-address');
+    console.log('Found address elements:', addressElements.length);
     addressElements.forEach(el => {
         if (contactData.address) {
             el.textContent = contactData.address;
@@ -148,14 +157,21 @@ function updateContactInfo(contactData) {
     
     // Update WhatsApp number
     const whatsappElements = document.querySelectorAll('.whatsapp-number');
+    console.log('Found WhatsApp elements:', whatsappElements.length);
     whatsappElements.forEach(el => {
         if (contactData.whatsappNumber) {
-            el.textContent = contactData.whatsappNumber;
+            // Update WhatsApp links
+            if (el.tagName === 'A') {
+                el.href = `https://wa.me/91${contactData.whatsappNumber}?text=Hi, I'm interested in solar panel installation. Please provide more details.`;
+            } else {
+                el.textContent = contactData.whatsappNumber;
+            }
         }
     });
     
     // Update working hours
     const hoursElements = document.querySelectorAll('.working-hours, .business-hours');
+    console.log('Found hours elements:', hoursElements.length);
     hoursElements.forEach(el => {
         if (contactData.workingHours) {
             el.textContent = contactData.workingHours;
