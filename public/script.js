@@ -88,33 +88,33 @@ async function loadDynamicContent() {
             console.log('Content data:', content);
             
             // Update contact information
-            if (content.contact) {
-                updateContactInfo(content.contact);
+            if (content.contact && content.contact.contact) {
+                updateContactInfo(content.contact.contact);
             }
             
             // Update hero section
-            if (content.hero) {
-                updateHeroSection(content.hero);
+            if (content.hero && content.hero.hero) {
+                updateHeroSection(content.hero.hero);
             }
             
             // Update about section
-            if (content.about) {
-                updateAboutSection(content.about);
+            if (content.about && content.about.about) {
+                updateAboutSection(content.about.about);
             }
             
             // Update services
-            if (content.services) {
-                updateServices(content.services);
+            if (content.services && content.services.services) {
+                updateServices(content.services.services);
             }
             
             // Update projects
-            if (content.projects) {
-                updateProjects(content.projects);
+            if (content.projects && content.projects.projects) {
+                updateProjects(content.projects.projects);
             }
             
             // Update social media
-            if (content.social) {
-                updateSocialMedia(content.social);
+            if (content.social && content.social.social) {
+                updateSocialMedia(content.social.social);
             }
         }
     } catch (error) {

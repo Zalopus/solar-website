@@ -104,11 +104,11 @@ router.put('/:section', auth, [
       // Create new content section if it doesn't exist
       content = new Content({
         section: req.params.section,
-        ...req.body
+        [req.params.section]: req.body
       });
     } else {
-      // Update existing content
-      Object.assign(content, req.body);
+      // Update existing content - nest the data under the section name
+      content[req.params.section] = req.body;
     }
 
     content.lastModifiedBy = req.user.username;
