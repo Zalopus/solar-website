@@ -919,6 +919,17 @@ body {
     color: #ccc;
 }
 
+.designer-credit {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.designer-credit strong {
+    color: var(--secondary-green);
+    font-weight: 600;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .hamburger {
