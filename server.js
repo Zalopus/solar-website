@@ -61,7 +61,8 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/solar-tn'
 })
 .catch((error) => {
   console.error('❌ MongoDB connection error:', error);
-  process.exit(1);
+  // Don't exit the process, let the app continue without DB
+  console.log('⚠️ App will continue without database connection');
 });
 
 // Routes
