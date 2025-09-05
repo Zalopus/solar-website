@@ -77,40 +77,44 @@ document.addEventListener('DOMContentLoaded', () => {
 // Load dynamic content from API
 async function loadDynamicContent() {
     try {
+        console.log('Loading dynamic content...');
         const response = await fetch('/api/content');
         const result = await response.json();
         
+        console.log('API Response:', result);
+        
         if (result.success) {
             const content = result.data;
+            console.log('Content data:', content);
             
             // Update contact information
-            if (content.contact && content.contact.contact) {
-                updateContactInfo(content.contact.contact);
+            if (content.contact) {
+                updateContactInfo(content.contact);
             }
             
             // Update hero section
-            if (content.hero && content.hero.hero) {
-                updateHeroSection(content.hero.hero);
+            if (content.hero) {
+                updateHeroSection(content.hero);
             }
             
             // Update about section
-            if (content.about && content.about.about) {
-                updateAboutSection(content.about.about);
+            if (content.about) {
+                updateAboutSection(content.about);
             }
             
             // Update services
-            if (content.services && content.services.services) {
-                updateServices(content.services.services);
+            if (content.services) {
+                updateServices(content.services);
             }
             
             // Update projects
-            if (content.projects && content.projects.projects) {
-                updateProjects(content.projects.projects);
+            if (content.projects) {
+                updateProjects(content.projects);
             }
             
             // Update social media
-            if (content.social && content.social.social) {
-                updateSocialMedia(content.social.social);
+            if (content.social) {
+                updateSocialMedia(content.social);
             }
         }
     } catch (error) {
