@@ -598,11 +598,15 @@ class AdminPanel {
         try {
             this.showLoading();
             const formData = this.getFormData(`${section}ContentForm`);
+            console.log(`Submitting ${section} content:`, formData);
             
             const response = await this.apiCall(`/content/${section}`, 'PUT', formData);
+            console.log(`${section} response:`, response);
             
             if (response.success) {
                 this.showNotification(`${section} content updated successfully`, 'success');
+            } else {
+                this.showNotification(`Failed to update ${section} content: ${response.message}`, 'error');
             }
             this.hideLoading();
         } catch (error) {
@@ -716,7 +720,7 @@ class AdminPanel {
         try {
             this.showLoading();
             // Load service data for editing
-            const response = await this.apiCall('/content/services', 'GET');
+            const response = await this.apiCall('/content/services/services', 'GET');
             
             if (response.success && response.data.services && response.data.services.items) {
                 const service = response.data.services.items.find(s => s._id === serviceId);
@@ -860,7 +864,7 @@ class AdminPanel {
         try {
             this.showLoading();
             // Load project data for editing
-            const response = await this.apiCall('/content/projects', 'GET');
+            const response = await this.apiCall('/content/projects/projects', 'GET');
             
             if (response.success && response.data.projects && response.data.projects.items) {
                 const project = response.data.projects.items.find(p => p._id === projectId);
